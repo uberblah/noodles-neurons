@@ -1,8 +1,5 @@
 #include <iostream>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <fstream>
-#include "w2b.h"
+#include "lib/w2b.h"
 using namespace std;
 
 int main() {
