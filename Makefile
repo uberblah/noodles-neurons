@@ -18,7 +18,11 @@ wav2f: w2b.o wav2f.cpp
 w2b.o: lib/w2b.cpp lib/w2b.h
 	$(CC) $(CFLAGS) $<
 
+nnetwork: neural-network.cpp
+	$(CC) $^ -o neural-network -lm -lfann -lm
+
 clean:
 	rm -f *.o
 	rm -f *~
 	rm -f *.txt
+	$(RM) neural-network
