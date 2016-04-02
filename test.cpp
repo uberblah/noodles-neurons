@@ -10,11 +10,14 @@ int main() {
   int reta = 0;
 
   while (ret >= 256) {
-    ret = getBuffer(offset, "test.wav", buffer, 256);
+    //ret = getBuffer(offset, "prologue_long.wav", buffer, 256);
+    //ret = getBuffer(offset, "test.wav", buffer, 256);
+    ret = getBuffer(offset, "out.wav", buffer, 256);
     for (int i=0; i<ret; i++) cout << buffer[i] << endl;
-    reta = writeBuffer(offset, "out.wav", buffer, ret);
+    //reta = writeBuffer(offset, "out.wav", buffer, ret);
     offset += ret;
   }
+
 
   return 0;
 }

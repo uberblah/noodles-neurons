@@ -14,7 +14,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include  <sndfile.hh>
+#include  <sndfile.h>
 #include <fstream>
 using namespace std;
 
@@ -52,15 +52,14 @@ int writeBuffer(unsigned int offset, char* output_filename, short int buffer[], 
   struct SF_INFO* info = new SF_INFO;
   info->format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
   info->channels = 1;
-  info->samplerate = 44100;
+  info->samplerate = 8000;
 
   SNDFILE* output = sf_open(output_filename, SFM_WRITE, info);
-
   if (!output) return -1;
 
   sf_seek(output, offset, SEEK_SET);
 
-  int ret = sf_writef_short(output, buffer, buffer_size);
+  int ret = sf_write_short(output, buffer, buffer_size);
   sf_write_sync(output);
 
   sf_close(output);
