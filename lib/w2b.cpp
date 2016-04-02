@@ -14,6 +14,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include  <sndfile.hh>
 #include <fstream>
 using namespace std;
 
@@ -22,65 +23,27 @@ using namespace std;
 
 int getBuffer(unsigned int offset, char* input_filename,
               short int buffer[], const int buffer_size) {
-  offset += HEADER_SIZE;
-  FILE* input = fopen(input_filename, "rb");
-  
-  if (input) {
-    short int secondary_buffer[NUM_CHANNELS*buffer_size];
-    fseek(input, offset, SEEK_SET);
-    if (feof(input)) return 0;
-    int ret = fread(secondary_buffer, sizeof(short int), NUM_CHANNELS*buffer_size, input);
-    cout << "blah: " << ret << endl;
 
-    for (int i=0; i<ret/NUM_CHANNELS; i++) {
-      //this strips out to 1 channel
-      buffer[i] = secondary_buffer[NUM_CHANNELS*i];
-    }
-    fclose(input);
-    return ret;
-  }
-  else {
-    return -1;
-  }
-}
+  struct SF_INFO* info = new SF_INFO;
+  info->format = 0;
+  SNDFILE* input = sf_open(input_filename, SFM_READ, info);
 
-int writeEmptyWav(char* input_filename, char* output_filename) {
-  FILE* input = fopen(input_filename, "rb");
-  FILE* output = fopen(output_filename, "wb");
+  if (!input) return -1;
 
-  if ((!input) || (!output)) return 1;
+  sf_seek(input, offset, SEEK_SET);
 
-  char buff[44];
-  fread(buff, 1, 44, input);
-  fwrite(buff, sizeof(char), sizeof(buff), output);
-  fclose(input);
-  fclose(output);
+  short int secondary_buffer[info->channels*buffer_size];
 
-  return 0;
-}
 
-int writeBuffer(unsigned int offset, char* output_filename, short int buffer[], const int buffer_size) {
-  static int total = 0;
-  offset += HEADER_SIZE;
-  FILE* output = fopen(output_filename, "wb");
+  int ret = sf_readf_short(input, secondary_buffer, buffer_size);
 
-  if (!output || !buffer_size) return -1;
-
-  short int secondary_buffer[NUM_CHANNELS*buffer_size];
-
-  //duplicate the channels into the secondary buffer
   for (int i=0; i<buffer_size; i++) {
-    for (int j=0; j<NUM_CHANNELS; j++) {
-      secondary_buffer[i*NUM_CHANNELS + j] = buffer[i];
-    }
+    buffer[i] = secondary_buffer[info->channels*i];
   }
 
-  fseek(output, offset, SEEK_SET);
-  int ret = fwrite(secondary_buffer, sizeof(short int), NUM_CHANNELS*buffer_size, output);
-  fclose(output);
+  sf_close(input);
 
-  total+=ret;
-  cout << total << endl;
+  delete(info);
 
   return ret;
 }

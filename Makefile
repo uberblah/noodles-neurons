@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -c -g -Wall -Wextra
-LFLAGS = -g -Wall -Wextra
+LFLAGS = -g -Wall -Wextra -I/usr/local/lib -L/usr/local/lib -lsndfile
 
 .PHONY: all clean
 

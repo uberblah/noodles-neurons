@@ -5,23 +5,9 @@ using namespace std;
 int main() {
   //test
   short int buffer[256];
-  int offset = 0;
-  writeEmptyWav("test.wav", "out.wav");
+  cout << getBuffer(0, "test.wav", buffer, 256) << endl;
 
-  int ret = 5505;
-  int count = 0;
-  int retb = 0;
+  for (int i=0; i<256; i++) cout << buffer[i] << endl;
 
-  while (ret >= 256*2) {
-    ret = getBuffer(offset, "test.wav", buffer, 256);
-    count += ret;
-    if (ret == 256*2) {
-      retb = writeBuffer(offset, "out.wav", buffer, ret);
-    }
-    offset += 256*2;
-  }
-
-  cout << "count: " << count << endl;
-  cout << "count2: " << retb << endl;
   return 0;
 }
