@@ -21,3 +21,4 @@ w2b.o: lib/w2b.cpp lib/w2b.h
 clean:
 	rm -f *.o
 	rm -f *~
+	rm -f *.txt
