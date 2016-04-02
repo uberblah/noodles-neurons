@@ -1,0 +1,4 @@
+1) make the network recurrent (double input layer size)
+2) switch to manual training
+3) make pluggable training input
+4) plug in some music!
