@@ -1,6 +1,6 @@
 #include "fann.h"
 
-#define LAYERSIZE 128
+#define LAYERSIZE 256
 
 int main()
 {
