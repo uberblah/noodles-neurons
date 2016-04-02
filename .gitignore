@@ -29,3 +29,6 @@
 
 # vim cache files
 *un~
+
+# node modules
+webapp/node_modules

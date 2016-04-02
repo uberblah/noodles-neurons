@@ -1,0 +1,15 @@
+{
+  "name": "noodles-and-neurons",
+  "version": "1.0.0",
+  "description": "A simple app to interface with the noodles and neurons music generator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WD",
+  "license": "Beerware",
+  "dependencies": {
+    "busboy": "^0.2.13",
+    "express": "^4.13.4"
+  }
+}
