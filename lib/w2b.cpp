@@ -30,7 +30,7 @@ int getBuffer(unsigned int offset, char* input_filename,
     fseek(input, offset, SEEK_SET);
     if (feof(input)) return 0;
     int ret = fread(secondary_buffer, sizeof(short int), NUM_CHANNELS*buffer_size, input);
-    ret = ret/2;
+    cout << "blah: " << ret << endl;
 
     for (int i=0; i<ret/NUM_CHANNELS; i++) {
       //this strips out to 1 channel
@@ -60,6 +60,7 @@ int writeEmptyWav(char* input_filename, char* output_filename) {
 }
 
 int writeBuffer(unsigned int offset, char* output_filename, short int buffer[], const int buffer_size) {
+  static int total = 0;
   offset += HEADER_SIZE;
   FILE* output = fopen(output_filename, "wb");
 
@@ -77,6 +78,9 @@ int writeBuffer(unsigned int offset, char* output_filename, short int buffer[], 
   fseek(output, offset, SEEK_SET);
   int ret = fwrite(secondary_buffer, sizeof(short int), NUM_CHANNELS*buffer_size, output);
   fclose(output);
+
+  total+=ret;
+  cout << total << endl;
 
   return ret;
 }
