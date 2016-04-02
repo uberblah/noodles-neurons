@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NUM_IN_OUT 50
+#define NUM_IN_OUT 256
 #define MAX_ITERATIONS 50000
 #define ERROR 0.001
 

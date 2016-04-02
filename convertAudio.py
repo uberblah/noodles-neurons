@@ -4,6 +4,7 @@ import sys
 import os
 
 DECIMAL_PLACES = 2
+THRESHOLD = 0.01
 
 # Parsing the input arguments to make sure they're valid.
 # It's udgly but there's no need to use argparse for a script so simple
@@ -42,11 +43,16 @@ with open(str(sys.argv[1]),"r") as infile:
             # for fenn
             line = str(round(int(line.split("\n")[0])/32767,DECIMAL_PLACES))
             if len(lineBuffer) == numSPerLine:
-                outfile.write(" ".join(lineBuffer) + "\n")
-                if not firstTime:
+                aboveThreshold = True
+                for item in lineBuffer:
+                    if abs(float(item)) < THRESHOLD:
+                        aboveThreshold = False
+                if aboveThreshold:
                     outfile.write(" ".join(lineBuffer) + "\n")
-                else:
-                    firstTime = False
+                    if not firstTime:
+                        outfile.write(" ".join(lineBuffer) + "\n")
+                    else:
+                        firstTime = False
                 lineBuffer = []
             lineBuffer.append(line)
         outfile.close()
