@@ -4,8 +4,8 @@ var fs = require("fs");
 var exec = require("child_process").exec;
 var path = require("path");
 
-var f2wav = process.env.HOME + "/Git/noodles-neurons/f2wav";
-var wav2f = process.env.HOME + "/Git/noodles-neurons/wav2f";
+var prog = "python " + path.join(__dirname, "../learning.py");
+var net = path.join(__dirname, "../out.net");
 
 var server = express();
 
@@ -43,12 +43,10 @@ server.post("/upload", parseMultipart, function (req, res, next) {
   //req.params.data should contain a buffer with the data
   fs.writeFile(filename, req.params.data, function (err) {
     if (err) throw err;
-    exec(wav2f + " " + filename + " > " + "/tmp/" + counter.toString() + ".txt", function (err, stdout, stderr) {
-      //todo add an exec to run the prog on that tmpfile, parse the output,
-      //return the wav
-      res.status(200).send(stdout).end();
-      //res.status(200).sendFile("/tmp/" + counter.toString() + ".txt");
-      counter++;
+    exec(prog + " train " + net + " " + filename, function (err, stdout, stderr) {
+      exec(prog + " synth " + net + " " + filename + " /tmp/" + counter.toString() + ".wav", function (err, stdout, stderr) {
+        res.status(200).sendFile("/tmp/" + counter.toString() + ".wav");
+      });
     });
   });
 
