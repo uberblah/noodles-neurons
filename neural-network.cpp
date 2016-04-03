@@ -10,12 +10,12 @@
 #define ERROR 0.001
 
 int main(int argc, char* argv[]) {
+    bool iflag, oflag, tflag, nflag, gflag;
     int flag;
     struct fann *nNetwork;
     char* inputFileName;
     char* dataFileName;
     char* outputFileName;
-    bool iflag, oflag, tflag;
 
     srand(time(NULL));
 
