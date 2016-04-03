@@ -159,7 +159,7 @@ if mode == "synth":
 elif mode == "test":
     print("not yet implemented")
 else:
-    print("you shithead!")
+    print("no mode given")
     exit(0xdeadbeef)
 
 # soundfile.write('new_file.ogg', data, samplerate)

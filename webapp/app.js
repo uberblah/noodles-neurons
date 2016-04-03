@@ -13,7 +13,8 @@ var counter = 0;
 
 server.use(express.static("public"));
 
-//a busboy multipart parser stolen from another one of my projects
+//a busboy multipart parser.
+//Luckily I had written one of these before
 var parseMultipart = function (req, res, next) {
   var busboy = new Busboy({headers: req.headers});
   busboy.on("file", function(fieldname, file, filename, encoding, mimetype) {
