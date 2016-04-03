@@ -5,6 +5,7 @@ from keras.models import Sequential, Graph
 from keras.layers.core import Dense
 from keras.layers.recurrent import LSTM, SimpleRNN
 from keras.layers.convolutional import Convolution1D
+from keras.layers.normalization import BatchNormalization
 from keras.optimizers import SGD, RMSprop
 import keras.objectives as KObjs
 
@@ -49,9 +50,10 @@ model.add_node(Dense(sample_size, activation = "sigmoid"),\
 memolayer = Dense(sample_size, activation = "sigmoid", init = "glorot_normal")
 model.add_node(memolayer, inputs = ["memo", "audio"], name = "memolayer")
 model.add_node(Dense(sample_size, activation = "sigmoid"),\
-                inputs = ["memolayer", "audiolayer"], name = "mergelayer")
+                input = "audiolayer", name = "mergelayer")
+model.add_node(BatchNormalization(), input = "memolayer", name = "normlayer")
+model.add_output("memo-out", input = "normlayer", merge_mode = "sum")
 model.add_output("output", input = "mergelayer", merge_mode = "sum")
-model.add_output("memo-out", input = "memolayer", merge_mode = "sum")
 
 # make a diagram of the network, save it in a file
 if model_image != None:
@@ -78,7 +80,7 @@ KObjs.allzero = lambda x,y: KObjs.mean_squared_error(x, y)\
                             * rnd.choice([-0.01, 0.01])
 #model.compile(optimizer=rms, loss={"output": "mean_squared_error"})
 model.compile(optimizer = rms,\
-    loss = {"output": "mean_squared_error", "memo-out": "allzero"})
+    loss = {"output": "mean_squared_error", "memo-out": "mean_squared_error"})
 
 # load weights if available
 print("loading weights...")
