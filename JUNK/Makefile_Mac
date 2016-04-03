@@ -1,0 +1,25 @@
+CC = g++
+CFLAGS = -c -g -Wall -Wextra
+LFLAGS = -g -Wall -Wextra -I/usr/local/lib -L/usr/local/lib
+
+.PHONY: all clean
+
+all: f2wav wav2f nnetwork
+
+f2wav: w2b.o f2wav.cpp
+	$(CC) $(LFLAGS) -lsndfile $^ -o $@
+
+wav2f: w2b.o wav2f.cpp
+	$(CC) $(LFLAGS) -lsndfile $^ -o $@
+
+w2b.o: lib/w2b.cpp lib/w2b.h
+	$(CC) $(CFLAGS) -lsndfile $<
+
+nnetwork: neural-network.cpp
+	$(CC) $(CFLAGS) $^ -o $@ -lfann
+
+clean:
+	$(RM) *.o
+	$(RM) *~
+	$(RM) *.txt
+	$(RM) neural-network
