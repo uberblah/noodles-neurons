@@ -43,10 +43,8 @@ server.post("/upload", parseMultipart, function (req, res, next) {
   //req.params.data should contain a buffer with the data
   fs.writeFile(filename, req.params.data, function (err) {
     if (err) throw err;
-    exec(prog + " train " + net + " " + filename, function (err, stdout, stderr) {
-      exec(prog + " synth " + net + " " + filename + " /tmp/" + counter.toString() + ".wav", function (err, stdout, stderr) {
-        res.status(200).sendFile("/tmp/" + counter.toString() + ".wav");
-      });
+    exec(prog + " synth " + net + " " + filename + " /tmp/" + counter.toString() + ".wav", function (err, stdout, stderr) {
+      res.status(200).sendFile("/tmp/" + counter.toString() + ".wav");
     });
   });
 
