@@ -11,7 +11,7 @@ var server = express();
 
 var counter = 0;
 
-
+server.use(express.static("public"));
 
 //a busboy multipart parser stolen from another one of my projects
 var parseMultipart = function (req, res, next) {
