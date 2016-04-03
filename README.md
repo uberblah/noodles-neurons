@@ -4,7 +4,7 @@
 ## What
 This is noodles & neurons, a "music generator" based off of a neural network. It trains a neural network off of .wav files and then uses a .wav file to attempt to generate more music. It does generate music, but the music is not in some's tastes. All I can say is that my noodles & neurons outputs aren't going on my ipod anytime soon.
 
-The 2 versions of noodles & neurons were built in C++ (first) and python (2nd). Our C++ library ran into limitations in that we could not build an RNN, which we believed would help us get a more accurate result. It works, but produces fairly simple tones.
+The 2 versions of noodles & neurons were built in C++ (first) and python (2nd). Our C++ library ran into limitations in that we could not build an RNN, which we believed would help us get a more accurate result. It works, but produces fairly simple tones. The `JUNK` directory contains that first version.
 
 ## Why
 We wanted to learn about neural networks, and audio, while difficult to get right, is easy to deal with in a simple input & output sense. We take in samples and output samples, producing a real, listenable result. The only way we completely fail is by generating 0's. All in all, it was a good learning experience, but we hit our fair share of roadblocks along the way.
